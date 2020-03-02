@@ -23,11 +23,13 @@ public class LockTask extends CordovaPlugin {
 
     activity = cordova.getActivity();
     ActivityManager activityManager = (ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE);
-    String adminClassName = "";
+    String adminClassName = "com.mama.deviceadmin.CordovaDeviceAdminReceiver";
 
+	/*
     if (args.length() > 0) {
       adminClassName = args.getString(0);
     }
+	*/
 
     try {
       if (ACTION_START_LOCK_TASK.equals(action)) {
@@ -37,7 +39,7 @@ public class LockTask extends CordovaPlugin {
           if (!adminClassName.isEmpty()) {
 
             DevicePolicyManager mDPM = (DevicePolicyManager) activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
-            ComponentName mDeviceAdmin = new ComponentName(activity.getPackageName(), activity.getPackageName() + "." + adminClassName);
+            ComponentName mDeviceAdmin = new ComponentName(activity.getPackageName(), adminClassName);
 
             if (mDPM.isDeviceOwnerApp(activity.getPackageName())) {
               String[] packages = {activity.getPackageName()};
