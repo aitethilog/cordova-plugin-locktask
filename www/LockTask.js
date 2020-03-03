@@ -7,5 +7,8 @@ module.exports = {
   },
   stopLockTask: function (successCallback, errorCallback) {
     cordova.exec(successCallback, errorCallback, "LockTask", "stopLockTask", []);
+  },
+  removeDeviceOwner: function (successCallback, errorCallback) {
+    cordova.exec(successCallback, errorCallback, "LockTask", "removeDeviceOwner", []);
   }
 };

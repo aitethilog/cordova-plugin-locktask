@@ -18,6 +18,7 @@ public class LockTask extends CordovaPlugin {
 
   private static final String ACTION_START_LOCK_TASK = "startLockTask";
   private static final String ACTION_STOP_LOCK_TASK = "stopLockTask";
+  private static final String ACTION_REMOVE_DEVICE_OWNER = "removeDeviceOwner";
 
   private Activity activity = null;
 
@@ -49,7 +50,6 @@ public class LockTask extends CordovaPlugin {
         }
 
         callbackContext.success();
-
         return true;
 
       } else if (ACTION_STOP_LOCK_TASK.equals(action)) {
@@ -61,7 +61,15 @@ public class LockTask extends CordovaPlugin {
         callbackContext.success();
         return true;
 
-      } else {
+      } else if (ACTION_REMOVE_DEVICE_OWNER.equals(action)) {
+		DevicePolicyManager mDPM = (DevicePolicyManager) activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
+		mDPM.clearDeviceOwnerApp(activity.getPackageName());
+		  
+        callbackContext.success();
+		return true;
+
+	  }
+	  else {
 
         callbackContext.error("The method '" + action + "' does not exist.");
         return false;
