@@ -8,6 +8,13 @@ module.exports = {
   stopLockTask: function (successCallback, errorCallback) {
     cordova.exec(successCallback, errorCallback, "LockTask", "stopLockTask", []);
   },
+  isInKiosk: function (callback) {
+	  exec(function (out) {
+		  callback(out == "true");
+	  }, function (error) {
+		  alert("LockTask.isInKiosk failed: " + error);
+	  }, "LockTask", "isInKiosk", []);
+  },
   removeDeviceOwner: function (successCallback, errorCallback) {
     cordova.exec(successCallback, errorCallback, "LockTask", "removeDeviceOwner", []);
   }

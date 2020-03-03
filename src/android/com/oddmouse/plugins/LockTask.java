@@ -18,6 +18,7 @@ public class LockTask extends CordovaPlugin {
 
   private static final String ACTION_START_LOCK_TASK = "startLockTask";
   private static final String ACTION_STOP_LOCK_TASK = "stopLockTask";
+  private static final String ACTION_IS_IN_KIOSK = "isInKiosk";
   private static final String ACTION_REMOVE_DEVICE_OWNER = "removeDeviceOwner";
 
   private Activity activity = null;
@@ -30,7 +31,11 @@ public class LockTask extends CordovaPlugin {
     String adminClassName = "com.mama.deviceadmin.CordovaDeviceAdminReceiver";
 
     try {
-      if (ACTION_START_LOCK_TASK.equals(action)) {
+	  if (ACTION_IS_IN_KIOSK.equals(action)) {
+		  callbackContext.success(Boolean.toString(activityManager.isInLockTaskMode()));
+		  return true;
+		  
+	  } else if (ACTION_START_LOCK_TASK.equals(action)) {
 
         if (!activityManager.isInLockTaskMode()) {
 
