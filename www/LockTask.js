@@ -9,7 +9,7 @@ module.exports = {
     cordova.exec(successCallback, errorCallback, "LockTask", "stopLockTask", []);
   },
   isInKiosk: function (callback) {
-	  exec(function (out) {
+	  cordova.exec(function (out) {
 		  callback(out == "true");
 	  }, function (error) {
 		  alert("LockTask.isInKiosk failed: " + error);
