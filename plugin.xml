@@ -17,8 +17,41 @@
     <config-file target="res/xml/config.xml" parent="/*">
       <feature name="LockTask">
         <param name="android-package" value="com.oddmouse.plugins.LockTask" />
+		<param name="onload" value="true" />
       </feature>
     </config-file>
+	
+	<edit-config file="AndroidManifest.xml" target="/manifest/application/activity[@android:label='@string/activity_name']" mode="merge">
+		<activity android:name="com.oddmouse.plugins.LockTaskActivity" android:keepScreenOn="true" android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+		</activity>
+	</edit-config>
+	
+	<config-file target="AndroidManifest.xml" parent="/manifest/application/activity[@android:label='@string/activity_name']">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.DEFAULT" /><!-- Handler of app icon (required to be launcher) -->
+				<category android:name="android.intent.category.HOME" /><!-- Handler of Home button -->
+			</intent-filter>
+	</config-file>
+	
+	<config-file target="AndroidManifest.xml" parent="/manifest/application">
+		<!-- autorun after the app APK is updated -->
+		<receiver android:name="jk.cordova.plugin.kiosk.MyPackageReplacedEventReceiver">
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED"/>
+			</intent-filter>
+		</receiver>
+	</config-file>
+
+	<config-file target="AndroidManifest.xml" parent="/manifest">
+			<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+			<uses-permission android:name="android.permission.REORDER_TASKS"/>
+			<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+	</config-file>
+	
+	<source-file src="src/android/com/oddmouse/plugins/LockTaskActivity.java" target-dir="src/com/oddmouse/plugins" />
+	<source-file src="src/android/com/oddmouse/plugins/MyPackageReplacedEventReceiver.java" target-dir="src/com/oddmouse/plugins" />
+	<source-file src="src/android/com/oddmouse/plugins/StatusBarOverlay.java" target-dir="src/com/oddmouse/plugins" />
     <source-file src="src/android/com/oddmouse/plugins/LockTask.java" target-dir="src/com/oddmouse/plugins"/>
   </platform>
 </plugin>
