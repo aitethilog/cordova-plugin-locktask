@@ -36,9 +36,14 @@
 	</config-file>
 
 	<config-file target="AndroidManifest.xml" parent="/manifest">
-			<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-			<uses-permission android:name="android.permission.REORDER_TASKS"/>
-			<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+		<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+		<uses-permission android:name="android.permission.REORDER_TASKS"/>
+		<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+		<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+		<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+		<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+		<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+		<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 	</config-file>
 	
 	<source-file src="src/android/com/oddmouse/plugins/LockTaskActivity.java" target-dir="src/com/oddmouse/plugins" />
