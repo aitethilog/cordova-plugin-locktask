@@ -25,40 +25,21 @@ public class LockTask extends CordovaPlugin {
 
   @Override
   public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-
-    activity = cordova.getActivity();
-    ActivityManager activityManager = (ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE);
-    String adminClassName = "com.mama.deviceadmin.CordovaDeviceAdminReceiver";
-
     try {
 	  if (ACTION_IS_IN_KIOSK.equals(action)) {
+      activity = cordova.getActivity();
+      ActivityManager activityManager = (ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE);
 		  callbackContext.success(Boolean.toString(activityManager.isInLockTaskMode()));
 		  return true;
-		  
+
 	  } else if (ACTION_START_LOCK_TASK.equals(action)) {
-
-        if (!activityManager.isInLockTaskMode()) {
-
-          if (!adminClassName.isEmpty()) {
-
-            DevicePolicyManager mDPM = (DevicePolicyManager) activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
-            ComponentName mDeviceAdmin = new ComponentName(activity.getPackageName(), adminClassName);
-
-            if (mDPM.isDeviceOwnerApp(activity.getPackageName())) {
-              String[] packages = {activity.getPackageName()};
-              mDPM.setLockTaskPackages(mDeviceAdmin, packages);
-            }
-
-          }
-
-          activity.startLockTask();
-        }
-
+	      customStartLockTask();
         callbackContext.success();
         return true;
 
       } else if (ACTION_STOP_LOCK_TASK.equals(action)) {
-
+      activity = cordova.getActivity();
+        ActivityManager activityManager = (ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE);
         if (activityManager.isInLockTaskMode()) {
           activity.stopLockTask();
         }
@@ -67,15 +48,13 @@ public class LockTask extends CordovaPlugin {
         return true;
 
       } else if (ACTION_REMOVE_DEVICE_OWNER.equals(action)) {
-		DevicePolicyManager mDPM = (DevicePolicyManager) activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
-		mDPM.clearDeviceOwnerApp(activity.getPackageName());
-		  
+        DevicePolicyManager mDPM = (DevicePolicyManager) activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
+        mDPM.clearDeviceOwnerApp(activity.getPackageName());
+
         callbackContext.success();
-		return true;
+        return true;
 
-	  }
-	  else {
-
+      } else {
         callbackContext.error("The method '" + action + "' does not exist.");
         return false;
 
@@ -87,10 +66,11 @@ public class LockTask extends CordovaPlugin {
 
     }
   }
-  
+
 	@Override
 	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
 		super.initialize(cordova, webView);
+		customStartLockTask();
 		hideSystemUI();
 	}
 
@@ -99,7 +79,7 @@ public class LockTask extends CordovaPlugin {
 		super.onResume(multitasking);
 		hideSystemUI();
 	}
-	
+
 	private void hideSystemUI() {
         View mDecorView = cordova.getActivity().getWindow().getDecorView();
         // Set the IMMERSIVE flag.
@@ -125,5 +105,25 @@ public class LockTask extends CordovaPlugin {
                                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
             }
         });
+    }
+
+    private void customStartLockTask() {
+      activity = cordova.getActivity();
+      ActivityManager activityManager = (ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE);
+      String adminClassName = "com.mama.deviceadmin.CordovaDeviceAdminReceiver";
+
+      if (!activityManager.isInLockTaskMode()) {
+        if (!adminClassName.isEmpty()) {
+          DevicePolicyManager mDPM = (DevicePolicyManager) activity.getSystemService(Context.DEVICE_POLICY_SERVICE);
+          ComponentName mDeviceAdmin = new ComponentName(activity.getPackageName(), adminClassName);
+
+          if (mDPM.isDeviceOwnerApp(activity.getPackageName())) {
+            String[] packages = {activity.getPackageName()};
+            mDPM.setLockTaskPackages(mDeviceAdmin, packages);
+          }
+        }
+
+        activity.startLockTask();
+      }
     }
 }
