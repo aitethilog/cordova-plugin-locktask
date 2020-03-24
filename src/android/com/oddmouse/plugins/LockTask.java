@@ -62,7 +62,7 @@ public class LockTask extends CordovaPlugin {
         return true;
 
       } else if (IS_SET_AS_LAUNCHER.equals(action)) {
-        callbackContext.success(Boolean.toString(isSetAsDefaultLauncher())));
+        callbackContext.success(Boolean.toString(isSetAsDefaultLauncher()));
         return true;
 
       } else if (EXIT_LAUNCHER.equals(action)) {
