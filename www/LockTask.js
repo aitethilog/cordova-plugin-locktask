@@ -29,9 +29,19 @@ module.exports = {
       alert("LockTask.isSetAsLauncher failed: " + error);
     }, "LockTask", "isSetAsLauncher", []);
   },
-  changeLauncher: function () {
+  exitLauncher: function () {
 	cordova.exec(function () {}, function (error) {
-		alert("LockTask.changeLauncher failed: " + error);
-	}, "LockTask", "changeLauncher", []);
-}
+		alert("LockTask.exitLauncher failed: " + error);
+	}, "LockTask", "exitLauncher", []);
+  },
+  selectLauncher: function () {
+	cordova.exec(function () {}, function (error) {
+		alert("LockTask.selectLauncher failed: " + error);
+	}, "LockTask", "selectLauncher", []);
+  },
+  removeLauncher: function () {
+	cordova.exec(function () {}, function (error) {
+		alert("LockTask.removeLauncher failed: " + error);
+	}, "LockTask", "removeLauncher", []);
+  }
 };

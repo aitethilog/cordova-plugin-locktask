@@ -24,7 +24,9 @@ public class LockTask extends CordovaPlugin {
   private static final String ACTION_REMOVE_DEVICE_OWNER = "removeDeviceOwner";
 
   public static final String IS_SET_AS_LAUNCHER = "isSetAsLauncher";
-  public static final String CHANGE_LAUNCHER = "changeLauncher";
+  public static final String EXIT_LAUNCHER = "exitLauncher";
+  public static final String SELECT_LAUNCHER = "selectLauncher";
+  public static final String REMOVE_LAUNCHER = "removeLauncher";
 
   private Activity activity = null;
 
@@ -32,8 +34,8 @@ public class LockTask extends CordovaPlugin {
   public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
     try {
 	  if (ACTION_IS_IN_KIOSK.equals(action)) {
-      activity = cordova.getActivity();
-      ActivityManager activityManager = (ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE);
+		  activity = cordova.getActivity();
+		  ActivityManager activityManager = (ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE);
 		  callbackContext.success(Boolean.toString(activityManager.isInLockTaskMode()));
 		  return true;
 
@@ -60,11 +62,10 @@ public class LockTask extends CordovaPlugin {
         return true;
 
       } else if (IS_SET_AS_LAUNCHER.equals(action)) {
-        String myPackage = cordova.getActivity().getApplicationContext().getPackageName();
-        callbackContext.success(Boolean.toString(myPackage.equals(findLauncherPackageName())));
+        callbackContext.success(Boolean.toString(isSetAsDefaultLauncher())));
         return true;
 
-      } else if (CHANGE_LAUNCHER.equals(action)) {
+      } else if (EXIT_LAUNCHER.equals(action)) {
         Intent intent = new Intent(Intent.ACTION_MAIN);
 		intent.addCategory(Intent.CATEGORY_HOME);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -77,7 +78,36 @@ public class LockTask extends CordovaPlugin {
 		callbackContext.success();
 		return true;
 
-      } else {
+      } else if (SELECT_LAUNCHER.equals(action)) {
+        Intent startMain = new Intent(Intent.ACTION_MAIN);
+		startMain.addCategory(Intent.CATEGORY_HOME);
+		startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		cordova.getActivity().startActivity(startMain);
+		
+		/*
+		if(!isSetAsDefaultLauncher()) { 
+			PackageManager p = getPackageManager();
+			ComponentName cN = new ComponentName(Activity.this, FakeHome.class);
+			p.setComponentEnabledSetting(cN, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+
+			Intent selector = new Intent(Intent.ACTION_MAIN);
+			selector.addCategory(Intent.CATEGORY_HOME);            
+			startActivity(selector);
+
+			p.setComponentEnabledSetting(cN, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+		}
+			*/
+		
+		callbackContext.success();
+		return true;
+
+      } else if (REMOVE_LAUNCHER.equals(action)) {
+		cordova.getActivity().getPackageManager().clearPackagePreferredActivities(getPackageName());
+		
+		callbackContext.success();
+		return true;
+		
+	  } else {
         callbackContext.error("The method '" + action + "' does not exist.");
         return false;
 
@@ -149,6 +179,11 @@ public class LockTask extends CordovaPlugin {
         activity.startLockTask();
       }
     }
+
+	private Boolean isSetAsDefaultLauncher() {
+		String myPackage = cordova.getActivity().getApplicationContext().getPackageName();
+        return myPackage.equals(findLauncherPackageName());
+	}
 
     private String findLauncherPackageName() {
         final Intent intent = new Intent(Intent.ACTION_MAIN);
