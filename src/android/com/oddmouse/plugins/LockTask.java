@@ -102,7 +102,7 @@ public class LockTask extends CordovaPlugin {
 		return true;
 
       } else if (REMOVE_LAUNCHER.equals(action)) {
-		cordova.getActivity().getPackageManager().clearPackagePreferredActivities(getPackageName());
+		cordova.getActivity().getPackageManager().clearPackagePreferredActivities(activity.getPackageName());
 		
 		callbackContext.success();
 		return true;
