@@ -58,7 +58,7 @@ public class LockTask extends CordovaPlugin {
         callbackContext.success();
         return true;
 
-      } else if (ACTION_REMOVE_DEVICE_OWNER.equals(action)) {
+      } else if (IS_SET_AS_LAUNCHER.equals(action)) {
         String myPackage = cordova.getActivity().getApplicationContext().getPackageName();
         callbackContext.success(Boolean.toString(myPackage.equals(findLauncherPackageName())));
         return true;
