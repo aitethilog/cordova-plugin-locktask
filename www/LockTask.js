@@ -28,5 +28,10 @@ module.exports = {
     }, function (error) {
       alert("LockTask.isSetAsLauncher failed: " + error);
     }, "LockTask", "isSetAsLauncher", []);
-  }
+  },
+  changeLauncher: function () {
+	cordova.exec(function () {}, function (error) {
+		alert("LockTask.changeLauncher failed: " + error);
+	}, "LockTask", "changeLauncher", []);
+}
 };

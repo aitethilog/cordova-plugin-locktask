@@ -24,6 +24,7 @@ public class LockTask extends CordovaPlugin {
   private static final String ACTION_REMOVE_DEVICE_OWNER = "removeDeviceOwner";
 
   public static final String IS_SET_AS_LAUNCHER = "isSetAsLauncher";
+  public static final String CHANGE_LAUNCHER = "changeLauncher";
 
   private Activity activity = null;
 
@@ -62,6 +63,19 @@ public class LockTask extends CordovaPlugin {
         String myPackage = cordova.getActivity().getApplicationContext().getPackageName();
         callbackContext.success(Boolean.toString(myPackage.equals(findLauncherPackageName())));
         return true;
+
+      } else if (CHANGE_LAUNCHER.equals(action)) {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+		intent.addCategory(Intent.CATEGORY_HOME);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		
+		Intent chooser = Intent.createChooser(intent, "Select destination...");
+		if (intent.resolveActivity(cordova.getActivity().getPackageManager()) != null) {
+			cordova.getActivity().startActivity(chooser);
+		}
+		
+		callbackContext.success();
+		return true;
 
       } else {
         callbackContext.error("The method '" + action + "' does not exist.");

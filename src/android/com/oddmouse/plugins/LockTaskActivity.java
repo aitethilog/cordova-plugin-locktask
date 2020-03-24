@@ -73,8 +73,8 @@ public class LockTaskActivity extends CordovaActivity {
         decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
         // Remember that you should never show the action bar if the
         // status bar is hidden, so hide that too if necessary.
-        ActionBar actionBar = getActionBar();
-        if (actionBar != null) actionBar.hide();
+        /* ActionBar actionBar = getActionBar();
+        if (actionBar != null) actionBar.hide(); */
         
         // add overlay to prevent statusbar access by swiping
         // statusBarOverlay = StatusBarOverlay.createOrObtainPermission(this); // commenté pour avoir accès à notre header
