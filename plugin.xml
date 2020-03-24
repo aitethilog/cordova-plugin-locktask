@@ -20,30 +20,38 @@
 		<param name="onload" value="true" />
       </feature>
     </config-file>
-	
-	<config-file target="AndroidManifest.xml" parent="/manifest/application">
-		<!-- autorun after the app APK is updated -->
-		<receiver android:name="jk.cordova.plugin.kiosk.MyPackageReplacedEventReceiver">
-			<intent-filter>
-				<action android:name="android.intent.action.BOOT_COMPLETED"/>
-			</intent-filter>
-		</receiver>
-	</config-file>
 
-	<config-file target="AndroidManifest.xml" parent="/manifest">
-		<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-		<uses-permission android:name="android.permission.REORDER_TASKS"/>
-		<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-		<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-		<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-		<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-		<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-		<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-	</config-file>
-	
-	<source-file src="src/android/com/oddmouse/plugins/LockTaskActivity.java" target-dir="src/com/oddmouse/plugins" />
-	<source-file src="src/android/com/oddmouse/plugins/MyPackageReplacedEventReceiver.java" target-dir="src/com/oddmouse/plugins" />
-	<source-file src="src/android/com/oddmouse/plugins/StatusBarOverlay.java" target-dir="src/com/oddmouse/plugins" />
+    <config-file target="AndroidManifest.xml" parent="/manifest/application/activity[@android:label='@string/activity_name']">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.DEFAULT" /><!-- Handler of app icon (required to be launcher) -->
+        <category android:name="android.intent.category.HOME" /><!-- Handler of Home button -->
+      </intent-filter>
+    </config-file>
+
+    <config-file target="AndroidManifest.xml" parent="/manifest/application">
+      <!-- autorun after the app APK is updated -->
+      <receiver android:name="jk.cordova.plugin.kiosk.MyPackageReplacedEventReceiver">
+        <intent-filter>
+          <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+        </intent-filter>
+      </receiver>
+    </config-file>
+
+    <config-file target="AndroidManifest.xml" parent="/manifest">
+      <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+      <uses-permission android:name="android.permission.REORDER_TASKS"/>
+      <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+      <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+      <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+      <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+      <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+      <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    </config-file>
+
+    <source-file src="src/android/com/oddmouse/plugins/LockTaskActivity.java" target-dir="src/com/oddmouse/plugins" />
+    <source-file src="src/android/com/oddmouse/plugins/MyPackageReplacedEventReceiver.java" target-dir="src/com/oddmouse/plugins" />
+    <source-file src="src/android/com/oddmouse/plugins/StatusBarOverlay.java" target-dir="src/com/oddmouse/plugins" />
     <source-file src="src/android/com/oddmouse/plugins/LockTask.java" target-dir="src/com/oddmouse/plugins"/>
   </platform>
 </plugin>

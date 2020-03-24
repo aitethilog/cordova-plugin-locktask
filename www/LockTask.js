@@ -17,5 +17,17 @@ module.exports = {
   },
   removeDeviceOwner: function (successCallback, errorCallback) {
     cordova.exec(successCallback, errorCallback, "LockTask", "removeDeviceOwner", []);
+  },
+
+  isSetAsLauncher: function (callback) {
+    if(/ios|iphone|ipod|ipad/i.test(navigator.userAgent)) {
+      callback(false); // ios not supported - cannot be in kiosk
+      return;
+    }
+    exec(function (out) {
+      callback(out == "true");
+    }, function (error) {
+      alert("KioskPlugin.isSetAsLauncher failed: " + error);
+    }, "LockTask", "isSetAsLauncher", []);
   }
 };

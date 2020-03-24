@@ -5,6 +5,8 @@ import android.app.ActivityManager;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.view.View;
 
 import org.apache.cordova.CordovaPlugin;
@@ -20,6 +22,8 @@ public class LockTask extends CordovaPlugin {
   private static final String ACTION_STOP_LOCK_TASK = "stopLockTask";
   private static final String ACTION_IS_IN_KIOSK = "isInKiosk";
   private static final String ACTION_REMOVE_DEVICE_OWNER = "removeDeviceOwner";
+
+  public static final String IS_SET_AS_LAUNCHER = "isSetAsLauncher";
 
   private Activity activity = null;
 
@@ -52,6 +56,11 @@ public class LockTask extends CordovaPlugin {
         mDPM.clearDeviceOwnerApp(activity.getPackageName());
 
         callbackContext.success();
+        return true;
+
+      } else if (ACTION_REMOVE_DEVICE_OWNER.equals(action)) {
+        String myPackage = cordova.getActivity().getApplicationContext().getPackageName();
+        callbackContext.success(Boolean.toString(myPackage.equals(findLauncherPackageName())));
         return true;
 
       } else {
@@ -125,5 +134,12 @@ public class LockTask extends CordovaPlugin {
 
         activity.startLockTask();
       }
+    }
+
+    private String findLauncherPackageName() {
+        final Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        final ResolveInfo res = this.cordova.getActivity().getPackageManager().resolveActivity(intent, 0);
+        return res.activityInfo.packageName;
     }
 }
