@@ -21,14 +21,6 @@
       </feature>
     </config-file>
 
-    <config-file target="AndroidManifest.xml" parent="/manifest/application/activity[@android:label='@string/activity_name']">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.DEFAULT" /><!-- Handler of app icon (required to be launcher) -->
-        <category android:name="android.intent.category.HOME" /><!-- Handler of Home button -->
-      </intent-filter>
-    </config-file>
-
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
       <!-- autorun after the app APK is updated -->
       <receiver android:name="com.oddmouse.plugins.MyPackageReplacedEventReceiver">
@@ -37,6 +29,26 @@
         </intent-filter>
       </receiver>
       <activity android:name="com.oddmouse.plugins.LockTaskActivity" />
+	  <activity-alias
+        android:name="LauncherAlias1"
+        android:targetActivity="MainActivity" >
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.HOME" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</activity-alias>
+
+		<activity-alias
+			android:name="LauncherAlias2"
+			android:enabled="false"
+			android:targetActivity="MainActivity" >
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.HOME" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</activity-alias>
     </config-file>
 
     <config-file target="AndroidManifest.xml" parent="/manifest">

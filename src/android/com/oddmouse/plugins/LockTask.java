@@ -7,6 +7,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.provider.Settings;
 import android.view.View;
 
 import org.apache.cordova.CordovaPlugin;
@@ -84,25 +87,25 @@ public class LockTask extends CordovaPlugin {
 		startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		cordova.getActivity().startActivity(startMain);
 		
-		/*
-		if(!isSetAsDefaultLauncher()) { 
-			PackageManager p = getPackageManager();
-			ComponentName cN = new ComponentName(Activity.this, FakeHome.class);
-			p.setComponentEnabledSetting(cN, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
-
-			Intent selector = new Intent(Intent.ACTION_MAIN);
-			selector.addCategory(Intent.CATEGORY_HOME);            
-			startActivity(selector);
-
-			p.setComponentEnabledSetting(cN, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
-		}
-			*/
-		
 		callbackContext.success();
 		return true;
 
       } else if (REMOVE_LAUNCHER.equals(action)) {
-		cordova.getActivity().getPackageManager().clearPackagePreferredActivities(activity.getPackageName());
+		activity = cordova.getActivity();
+		PackageManager pkgMngr = activity.getPackageManager();
+		String packageName = activity.getPackageName();
+		
+		if (isSetAsDefaultLauncher()) {
+			pkgMngr.clearPackagePreferredActivities(activity.getPackageName());
+		}
+		else {
+			ComponentName cn1 = new ComponentName(packageName, packageName + ".LauncherAlias1");
+			ComponentName cn2 = new ComponentName(packageName, packageName + ".LauncherAlias2");
+			int dis = PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
+			if(pkgMngr.getComponentEnabledSetting(cn1) == dis) dis = 3 - dis;
+			pkgMngr.setComponentEnabledSetting(cn1, dis, PackageManager.DONT_KILL_APP);
+			pkgMngr.setComponentEnabledSetting(cn2, 3 - dis, PackageManager.DONT_KILL_APP);
+		}
 		
 		callbackContext.success();
 		return true;
