@@ -31,7 +31,7 @@
 
     <config-file target="AndroidManifest.xml" parent="/manifest/application">
       <!-- autorun after the app APK is updated -->
-      <receiver android:name="com.oddmouse.plugins.LockTask.MyPackageReplacedEventReceiver">
+      <receiver android:name="com.oddmouse.plugins.MyPackageReplacedEventReceiver">
         <intent-filter>
           <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
         </intent-filter>
