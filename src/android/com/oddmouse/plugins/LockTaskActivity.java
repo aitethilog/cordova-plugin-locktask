@@ -56,13 +56,6 @@ public class LockTaskActivity extends CordovaActivity {
             finish(); // prevent more instances of LockTask activity
         }
         
-        Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    loadUrl(launchUrl);
-                }
-            }, 16000);
-        
         // https://github.com/apache/cordova-plugin-statusbar/blob/master/src/android/StatusBar.java
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
