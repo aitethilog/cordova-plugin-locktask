@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://oddmouse@github.com/oddmouse/cordova-plugin-locktask.git"
+    "url": "git+https://github.com/aitethilog/cordova-plugin-locktask.git"
   },
   "keywords": [
     "cordova-android",
@@ -22,7 +22,7 @@
   "author": "Lindy Roquemore",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/oddmouse/cordova-plugin-locktask/issues"
+    "url": "https://github.com/aitethilog/cordova-plugin-locktask/issues"
   },
-  "homepage": "https://github.com/oddmouse/cordova-plugin-locktask#readme"
+  "homepage": "https://github.com/aitethilog/cordova-plugin-locktask#readme"
 }
