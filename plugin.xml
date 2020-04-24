@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-locktask-cc"
-        version="1.0.1">
+        version="1.0.2">
   <name>LockTask</name>
   <description>A Cordova plugin that provides access to Android’s screen pinning APIs.</description>
   <keywords>cordova,android,screen pinning,startLockTask,stopLockTask,lollipop,api 21</keywords>

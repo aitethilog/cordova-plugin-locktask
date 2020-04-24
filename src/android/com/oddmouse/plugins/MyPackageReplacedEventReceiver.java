@@ -10,9 +10,11 @@ import android.content.Intent;
 public class MyPackageReplacedEventReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
+    /*
         System.out.println("Kiosk application restarting after upgrade");
         Intent newIntent = new Intent(context, LockTaskActivity.class);
         newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(newIntent);
+        */
     }
 }
