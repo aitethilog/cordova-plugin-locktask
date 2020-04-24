@@ -1,16 +1,16 @@
 {
-  "name": "cordova-plugin-locktask",
+  "name": "cordova-plugin-locktask-cc",
   "version": "1.0.0",
   "description": "A Cordova plugin that provides access to Android’s screen pinning APIs.",
   "cordova": {
-    "id": "cordova-plugin-locktask",
+    "id": "cordova-plugin-locktask-cc",
     "platforms": [
       "android"
     ]
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aitethilog/cordova-plugin-locktask.git"
+    "url": "git+https://github.com/aitethilog/cordova-plugin-locktask-cc.git"
   },
   "keywords": [
     "cordova-android",
@@ -22,7 +22,7 @@
   "author": "Lindy Roquemore",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/aitethilog/cordova-plugin-locktask/issues"
+    "url": "https://github.com/aitethilog/cordova-plugin-locktask-cc/issues"
   },
-  "homepage": "https://github.com/aitethilog/cordova-plugin-locktask#readme"
+  "homepage": "https://github.com/aitethilog/cordova-plugin-locktask-cc#readme"
 }
